@@ -9,6 +9,8 @@ namespace addressbook_web_tests
         [TestMethod]
         public void TestMethod1()
         {
+            var i = 5;
+            Assert.Equals(i, 4);
         }
     }
 }
