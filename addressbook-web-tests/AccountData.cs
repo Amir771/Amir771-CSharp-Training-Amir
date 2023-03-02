@@ -9,12 +9,12 @@ namespace WebAddressBookTests
     internal class AccountData
     {
         private string username;
-        private string passwword;
+        private string password;
 
-        public AccountData(string username, string passwword)
+        public AccountData(string username, string password)
         {
             this.username = username;
-            this.passwword = passwword;
+            this.password = password;
         }
         
         public string Username
@@ -34,11 +34,11 @@ namespace WebAddressBookTests
         {
             get
             { 
-                return passwword;
+                return password;
             }
             set
             { 
-                passwword = value; 
+                password = value; 
             }
         }
     }
