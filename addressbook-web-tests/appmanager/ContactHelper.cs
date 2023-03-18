@@ -36,7 +36,7 @@ namespace WebAddressBookTests
         public ContactHelper ModifyContact(int p, ContactData newData)
         {
             manager.Navigator.LinkHome();
-            SelectContact(p+1);
+            SelectContact(p);
             InitContactModify(p+1);
             FillNewContact(newData);
             SubmitContactModify();
@@ -73,7 +73,7 @@ namespace WebAddressBookTests
         public ContactHelper SelectContact(int num)
         {
             driver.FindElement(By.Name("selected[]")).Click();
-            //driver.FindElement(By.XPath("(//div[@id='maintable']/tbody/td.center/input/[@name='selected[]'])[" + num + "]")).Click();
+            //driver.FindElement(By.XPath("(//div[@id='maintable']/tbody/td/input[@name='selected[]'])[" + num + "]")).Click();
             return this;
         }
 
