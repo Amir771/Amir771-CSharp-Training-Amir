@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace WebAddressBookTests
 {
@@ -19,9 +20,10 @@ namespace WebAddressBookTests
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-        
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> appManager = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost/addressbook";
@@ -32,15 +34,7 @@ namespace WebAddressBookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public IWebDriver Driver 
-        {  
-            get 
-            { 
-                return driver; 
-            }
-        }
-
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {
@@ -49,6 +43,26 @@ namespace WebAddressBookTests
             catch (Exception)
             {
                 // Ignore errors if unable to close the browser
+            }
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! appManager.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigator.OpenHomePage(); 
+                appManager.Value = newInstance;
+                
+            }
+            return appManager.Value;
+        }
+
+        public IWebDriver Driver 
+        {  
+            get 
+            { 
+                return driver; 
             }
         }
 

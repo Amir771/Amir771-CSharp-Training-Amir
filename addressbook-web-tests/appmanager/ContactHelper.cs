@@ -19,7 +19,7 @@ namespace WebAddressBookTests
             manager.Navigator.InitNewContactCreation();
             FillNewContact(contact);
             SubmitNewContact();
-            manager.Auth.Logout();
+            manager.Navigator.LinkHome();
             return this;
         }
 
@@ -29,7 +29,6 @@ namespace WebAddressBookTests
             SelectContact(p);
             RemoveContact();
             manager.Navigator.LinkHome();
-            manager.Auth.Logout();
             return this;
         }
 
@@ -41,7 +40,6 @@ namespace WebAddressBookTests
             FillNewContact(newData);
             SubmitContactModify();
             manager.Navigator.LinkHome();
-            manager.Auth.Logout();
             return this;
 
         }
@@ -54,12 +52,8 @@ namespace WebAddressBookTests
 
         public ContactHelper FillNewContact(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
 
@@ -70,10 +64,22 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public ContactHelper SelectContact(int num)
+        public ContactHelper SelectContact(int value)
         {
-            driver.FindElement(By.Name("selected[]")).Click();
-            //driver.FindElement(By.XPath("(//div[@id='maintable']/tbody/td/input[@name='selected[]'])[" + num + "]")).Click();
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                return this;
+            }
+            else
+            {
+                manager.Navigator.InitNewContactCreation();
+                ContactData contact = new ContactData("aab");
+                contact.Lastname = "bbb";
+                FillNewContact(contact);
+                SubmitNewContact();
+                manager.Navigator.LinkHome();
+            }
+            driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + value + "]")).Click();;
             return this;
         }
 

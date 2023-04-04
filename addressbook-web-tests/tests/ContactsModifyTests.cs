@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactsModifyTests : TestBase
+    public class ContactsModifyTests : AuthTestBase
     {
         [Test]
         public void ContactsModifyTest()
@@ -17,8 +17,15 @@ namespace WebAddressBookTests
             newData.Lastname = "eee";
 
             appManager.Contacts.ModifyContact(1, newData);
+        }
 
+        [Test]
+        public void ContactsModifyTestNull()
+        {
+            ContactData newData = new ContactData("nnn");
+            newData.Lastname = null;
 
+            appManager.Contacts.ModifyContact(1, newData);
         }
     }
 }

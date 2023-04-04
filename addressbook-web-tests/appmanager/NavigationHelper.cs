@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace WebAddressBookTests
 {
@@ -17,11 +18,20 @@ namespace WebAddressBookTests
         }
         public void OpenHomePage()
         {
+            if (driver.Url == baseURL)
+            {
+                return;
+            }
             driver.Navigate().GoToUrl(baseURL);
         }
 
         public void GoToGroupsPage()
         {
+            if(driver.Url == baseURL + "/group.php"
+                && IsElementPresent(By.Name("new")))
+                {
+                return;
+                }
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
