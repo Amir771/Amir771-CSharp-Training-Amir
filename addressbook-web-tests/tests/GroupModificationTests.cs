@@ -13,25 +13,52 @@ namespace WebAddressBookTests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("sss");
-            newData.Header = "xxx";
-            newData.Footer = "nnn";
-
-            appManager.Groups.ModifyGroup(1, newData);
+            if(appManager.Groups.GroupFound())
+            {
+                GroupData newData = new GroupData("sss");
+                newData.Header = "xxx";
+                newData.Footer = "nnn";
+                appManager.Groups.ModifyGroup(1, newData);
+            }
+            else
+            {
+                GroupData group = new GroupData("eee");
+                group.Header = "uuu";
+                group.Footer = "zzz";
+                appManager.Groups.CreateGroup(group);
+                
+                GroupData newData = new GroupData("sss");
+                newData.Header = "xxx";
+                newData.Footer = "nnn";
+                appManager.Groups.ModifyGroup(1, newData);
+            }
             
-
         }
 
         [Test]
         public void GroupModificationTestNull()
         {
-            GroupData newData = new GroupData("aaa");
-            newData.Header = null;
-            newData.Footer = null;
+            if (appManager.Groups.GroupFound())
+            {
+                GroupData newData = new GroupData("aaa");
+                newData.Header = null;
+                newData.Footer = null;
+                appManager.Groups.ModifyGroup(1, newData);
+            }
+            else
+            {
+                GroupData group = new GroupData("eee");
+                group.Header = "uuu";
+                group.Footer = "zzz";
+                appManager.Groups.CreateGroup(group);
 
-            appManager.Groups.ModifyGroup(1, newData);
+                GroupData newData = new GroupData("aaa");
+                newData.Header = null;
+                newData.Footer = null;
+                appManager.Groups.ModifyGroup(1, newData);
+            }
 
-
+            
         }
     }
 }

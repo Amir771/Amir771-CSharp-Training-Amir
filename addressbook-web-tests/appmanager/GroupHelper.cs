@@ -62,20 +62,6 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                return this;
-            }
-            else
-            {
-                InitGroupCreation();
-                GroupData group = new GroupData("rrr");
-                group.Header = "mmm";
-                group.Footer = "nnn";
-                FillGroupForm(group);
-                SubmitGroupCreation();
-                ReturnToGroupsPage();
-            }
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
@@ -110,6 +96,11 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.Name("edit")).Click();
             return this;
+        }
+
+        public bool GroupFound()
+        {
+            return IsElementPresent(By.Name("selected[]"));
         }
     }
 }

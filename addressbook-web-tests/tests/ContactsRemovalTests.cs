@@ -13,8 +13,18 @@ namespace WebAddressBookTests
         [Test]
         public void ContactRemovalTest()
         {
-            appManager.Contacts.RemoveContact(1);
-        }
+            if (appManager.Contacts.ContactFound())
+            {
+                appManager.Contacts.RemoveContact(1);
+            }
+            else
+            {
+                ContactData newContact = new ContactData("vvv");
+                newContact.Lastname = "hhh";
+                appManager.Contacts.CreateContact(newContact);
 
+                appManager.Contacts.RemoveContact(1);
+            }
+        }
     }
 }

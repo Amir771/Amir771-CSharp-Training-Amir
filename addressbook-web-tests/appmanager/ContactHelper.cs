@@ -66,19 +66,6 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int value)
         {
-            if (IsElementPresent(By.Name("selected[]")))
-            {
-                return this;
-            }
-            else
-            {
-                manager.Navigator.InitNewContactCreation();
-                ContactData contact = new ContactData("aab");
-                contact.Lastname = "bbb";
-                FillNewContact(contact);
-                SubmitNewContact();
-                manager.Navigator.LinkHome();
-            }
             driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + value + "]")).Click();;
             return this;
         }
@@ -93,6 +80,11 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
+        }
+
+        public bool ContactFound()
+        {
+            return IsElementPresent(By.Name("selected[]"));
         }
     }
 }

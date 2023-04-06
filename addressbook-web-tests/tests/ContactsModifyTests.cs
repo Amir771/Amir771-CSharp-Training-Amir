@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,44 @@ namespace WebAddressBookTests
         [Test]
         public void ContactsModifyTest()
         {
-            ContactData newData = new ContactData("zzz");
-            newData.Lastname = "eee";
+            if (appManager.Contacts.ContactFound())
+            {
+                ContactData newData = new ContactData("zzz");
+                newData.Lastname = "eee";
+                appManager.Contacts.ModifyContact(1, newData);
+            }
+            else
+            {
+                ContactData newContact = new ContactData("vvv");
+                newContact.Lastname = "hhh";
+                appManager.Contacts.CreateContact(newContact);
 
-            appManager.Contacts.ModifyContact(1, newData);
+                ContactData newData = new ContactData("zzz");
+                newData.Lastname = "eee";
+                appManager.Contacts.ModifyContact(1, newData);
+            }
+            
         }
 
         [Test]
         public void ContactsModifyTestNull()
         {
-            ContactData newData = new ContactData("nnn");
-            newData.Lastname = null;
+            if (appManager.Contacts.ContactFound())
+            {
+                ContactData newData = new ContactData("nnn");
+                newData.Lastname = null;
+                appManager.Contacts.ModifyContact(1, newData);
+            }
+            else
+            {
+                ContactData newContact = new ContactData("zzz");
+                newContact.Lastname = "eee";
+                appManager.Contacts.CreateContact(newContact);
 
-            appManager.Contacts.ModifyContact(1, newData);
+                ContactData newData = new ContactData("nnn");
+                newData.Lastname = null;
+                appManager.Contacts.ModifyContact(1, newData);
+            }
         }
     }
 }
