@@ -18,7 +18,15 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("sss");
                 newData.Header = "xxx";
                 newData.Footer = "nnn";
-                appManager.Groups.ModifyGroup(1, newData);
+                
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                appManager.Groups.ModifyGroup(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
             }
             else
             {
@@ -30,7 +38,15 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("sss");
                 newData.Header = "xxx";
                 newData.Footer = "nnn";
-                appManager.Groups.ModifyGroup(1, newData);
+
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                appManager.Groups.ModifyGroup(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
             }
             
         }
@@ -43,7 +59,15 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("aaa");
                 newData.Header = null;
                 newData.Footer = null;
-                appManager.Groups.ModifyGroup(1, newData);
+                
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                appManager.Groups.ModifyGroup(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
             }
             else
             {
@@ -55,7 +79,15 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("aaa");
                 newData.Header = null;
                 newData.Footer = null;
-                appManager.Groups.ModifyGroup(1, newData);
+                
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                appManager.Groups.ModifyGroup(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
             }
 
             

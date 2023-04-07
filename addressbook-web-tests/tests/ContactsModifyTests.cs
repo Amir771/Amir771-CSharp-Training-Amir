@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,7 +19,16 @@ namespace WebAddressBookTests
             {
                 ContactData newData = new ContactData("zzz");
                 newData.Lastname = "eee";
-                appManager.Contacts.ModifyContact(1, newData);
+
+                List<ContactData> oldContact = appManager.Contacts.GetContactList();
+                appManager.Contacts.ModifyContact(0, newData);
+
+                List<ContactData> changeContact = appManager.Contacts.GetContactList();
+                oldContact[0].Firstname = newData.Firstname;
+                oldContact[0].Lastname = newData.Lastname;
+                oldContact.Sort();
+                changeContact.Sort();
+                Assert.AreEqual(oldContact, changeContact);
             }
             else
             {
@@ -28,7 +38,16 @@ namespace WebAddressBookTests
 
                 ContactData newData = new ContactData("zzz");
                 newData.Lastname = "eee";
-                appManager.Contacts.ModifyContact(1, newData);
+
+                List<ContactData> oldContact = appManager.Contacts.GetContactList();
+                appManager.Contacts.ModifyContact(0, newData);
+
+                List<ContactData> changeContact = appManager.Contacts.GetContactList();
+                oldContact[0].Firstname = newData.Firstname;
+                oldContact[0].Lastname = newData.Lastname;
+                oldContact.Sort();
+                changeContact.Sort();
+                Assert.AreEqual(oldContact, changeContact);
             }
             
         }
@@ -40,7 +59,16 @@ namespace WebAddressBookTests
             {
                 ContactData newData = new ContactData("nnn");
                 newData.Lastname = null;
-                appManager.Contacts.ModifyContact(1, newData);
+
+                List<ContactData> oldContact = appManager.Contacts.GetContactList();
+                appManager.Contacts.ModifyContact(0, newData);
+
+                List<ContactData> changeContact = appManager.Contacts.GetContactList();
+                oldContact[0].Firstname = newData.Firstname;
+                oldContact[0].Lastname = newData.Lastname;
+                oldContact.Sort();
+                changeContact.Sort();
+                Assert.AreEqual(oldContact, changeContact);
             }
             else
             {
@@ -50,7 +78,16 @@ namespace WebAddressBookTests
 
                 ContactData newData = new ContactData("nnn");
                 newData.Lastname = null;
-                appManager.Contacts.ModifyContact(1, newData);
+
+                List<ContactData> oldContact = appManager.Contacts.GetContactList();
+                appManager.Contacts.ModifyContact(0, newData);
+
+                List<ContactData> changeContact = appManager.Contacts.GetContactList();
+                oldContact[0].Firstname = newData.Firstname;
+                oldContact[0].Lastname = newData.Lastname;
+                oldContact.Sort();
+                changeContact.Sort();
+                Assert.AreEqual(oldContact, changeContact);
             }
         }
     }

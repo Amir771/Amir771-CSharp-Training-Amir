@@ -36,7 +36,7 @@ namespace WebAddressBookTests
         {
             manager.Navigator.LinkHome();
             SelectContact(p);
-            InitContactModify(p+1);
+            InitContactModify(p+2);
             FillNewContact(newData);
             SubmitContactModify();
             manager.Navigator.LinkHome();
@@ -66,7 +66,7 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int value)
         {
-            driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + value + "]")).Click();;
+            driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + (value+1) + "]")).Click();;
             return this;
         }
 
@@ -85,6 +85,21 @@ namespace WebAddressBookTests
         public bool ContactFound()
         {
             return IsElementPresent(By.Name("selected[]"));
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.LinkHome();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[name='entry']"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> spaces = element.FindElements(By.TagName("td"));
+                contacts.Add(new ContactData(spaces[2].Text, spaces[1].Text));
+            }
+            return contacts;
+
+
         }
     }
 }

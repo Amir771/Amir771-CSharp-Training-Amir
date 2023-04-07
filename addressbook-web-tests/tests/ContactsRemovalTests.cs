@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -15,7 +16,13 @@ namespace WebAddressBookTests
         {
             if (appManager.Contacts.ContactFound())
             {
-                appManager.Contacts.RemoveContact(1);
+                List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+                appManager.Contacts.RemoveContact(0);
+
+                List<ContactData> newContacts = appManager.Contacts.GetContactList();
+
+                oldContacts.RemoveAt(0);
+                Assert.AreEqual(oldContacts, newContacts);
             }
             else
             {
@@ -23,7 +30,13 @@ namespace WebAddressBookTests
                 newContact.Lastname = "hhh";
                 appManager.Contacts.CreateContact(newContact);
 
-                appManager.Contacts.RemoveContact(1);
+                List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+                appManager.Contacts.RemoveContact(0);
+
+                List<ContactData> newContacts = appManager.Contacts.GetContactList();
+
+                oldContacts.RemoveAt(0);
+                Assert.AreEqual(oldContacts, newContacts);
             }
         }
     }
