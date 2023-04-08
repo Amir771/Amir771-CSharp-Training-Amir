@@ -47,6 +47,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitNewContact()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCashe = null;
             return this;
         }
 
@@ -61,6 +62,7 @@ namespace WebAddressBookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCashe = null;
             return this;
         }
 
@@ -79,6 +81,7 @@ namespace WebAddressBookTests
         public ContactHelper SubmitContactModify()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCashe = null;
             return this;
         }
 
@@ -87,17 +90,27 @@ namespace WebAddressBookTests
             return IsElementPresent(By.Name("selected[]"));
         }
 
+        private List<ContactData> contactCashe = null;
+
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.LinkHome();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactCashe == null)
             {
-                IList<IWebElement> spaces = element.FindElements(By.TagName("td"));
-                contacts.Add(new ContactData(spaces[2].Text, spaces[1].Text));
+                contactCashe = new List<ContactData>();
+                manager.Navigator.LinkHome();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    //IList<IWebElement> spaces = element.FindElements(By.TagName("td"));
+                    //contactCashe.Add(new ContactData(spaces[2].Text, spaces[1].Text));
+
+                    contactCashe.Add(new ContactData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("id")
+                    });
+                }
             }
-            return contacts;
+            return new List<ContactData>(contactCashe);
 
 
         }

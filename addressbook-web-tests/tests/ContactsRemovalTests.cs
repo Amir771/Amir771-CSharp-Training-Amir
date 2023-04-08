@@ -17,12 +17,18 @@ namespace WebAddressBookTests
             if (appManager.Contacts.ContactFound())
             {
                 List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+                ContactData toBeRemoved = oldContacts[0];
                 appManager.Contacts.RemoveContact(0);
 
                 List<ContactData> newContacts = appManager.Contacts.GetContactList();
 
                 oldContacts.RemoveAt(0);
                 Assert.AreEqual(oldContacts, newContacts);
+
+                foreach (ContactData contact in newContacts)
+                {
+                    Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+                }
             }
             else
             {
@@ -31,12 +37,18 @@ namespace WebAddressBookTests
                 appManager.Contacts.CreateContact(newContact);
 
                 List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+                ContactData toBeRemoved = oldContacts[0];
                 appManager.Contacts.RemoveContact(0);
 
                 List<ContactData> newContacts = appManager.Contacts.GetContactList();
 
                 oldContacts.RemoveAt(0);
                 Assert.AreEqual(oldContacts, newContacts);
+
+                foreach (ContactData contact in newContacts)
+                {
+                    Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+                }
             }
         }
     }

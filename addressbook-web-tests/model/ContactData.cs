@@ -8,18 +8,16 @@ namespace WebAddressBookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string lastname;
-
+        
         public ContactData(string firstname)
         {
-            this.firstname = firstname;
+            Firstname = firstname;
         }
 
         public ContactData(string firstname, string lastname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -34,18 +32,19 @@ namespace WebAddressBookTests
                 return true;
             }
 
-            return firstname == other.firstname;
+            return Firstname == other.Firstname;
         }
 
         
         public override int GetHashCode()
         {
-            return firstname.GetHashCode();
+            return Firstname.GetHashCode();
         }
 
         public override string ToString()
         {
-            return "name=" + firstname +lastname;
+            string s = string.Format("name={0} {1}",Lastname,Firstname);
+            return s;
         }
 
         public int CompareTo(ContactData other)
@@ -54,32 +53,15 @@ namespace WebAddressBookTests
             {
                 return 1;
             }
-            return firstname.CompareTo(other.firstname);
+            return Firstname.CompareTo(other.Firstname);
         }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
-            set
-            {
-                firstname = value;
-            }
+        public string Firstname { get; set; }
 
-        }
 
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
-        }
+        public string Lastname { get; set; }
+
+        public string Id { get; set; }
+
     }
 }

@@ -20,6 +20,7 @@ namespace WebAddressBookTests
                 newData.Footer = "nnn";
                 
                 List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                GroupData oldData = oldGroups[0];
                 appManager.Groups.ModifyGroup(0, newData);
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
@@ -27,6 +28,14 @@ namespace WebAddressBookTests
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData groups in newGroups)
+                {
+                    if (groups.Id == oldData.Id)
+                    {
+                        Assert.AreEqual(newData.Name, groups.Name);
+                    }
+                }
             }
             else
             {
@@ -40,6 +49,7 @@ namespace WebAddressBookTests
                 newData.Footer = "nnn";
 
                 List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                GroupData oldData = oldGroups[0];
                 appManager.Groups.ModifyGroup(0, newData);
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
@@ -47,6 +57,14 @@ namespace WebAddressBookTests
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData groups in newGroups)
+                {
+                    if(groups.Id == oldData.Id)
+                    {
+                        Assert.AreEqual(newData.Name, groups.Name);
+                    }
+                }
             }
             
         }
@@ -61,6 +79,7 @@ namespace WebAddressBookTests
                 newData.Footer = null;
                 
                 List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                GroupData oldData = oldGroups[0];
                 appManager.Groups.ModifyGroup(0, newData);
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
@@ -68,6 +87,14 @@ namespace WebAddressBookTests
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData groups in newGroups)
+                {
+                    if (groups.Id == oldData.Id)
+                    {
+                        Assert.AreEqual(newData.Name, groups.Name);
+                    }
+                }
             }
             else
             {
@@ -81,6 +108,7 @@ namespace WebAddressBookTests
                 newData.Footer = null;
                 
                 List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                GroupData oldData = oldGroups[0];
                 appManager.Groups.ModifyGroup(0, newData);
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
@@ -88,6 +116,14 @@ namespace WebAddressBookTests
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData groups in newGroups)
+                {
+                    if (groups.Id == oldData.Id)
+                    {
+                        Assert.AreEqual(newData.Name, groups.Name);
+                    }
+                }
             }
 
             
