@@ -16,39 +16,27 @@ namespace WebAddressBookTests
         {
             if (appManager.Contacts.ContactFound())
             {
-                List<ContactData> oldContacts = appManager.Contacts.GetContactList();
-                ContactData toBeRemoved = oldContacts[0];
-                appManager.Contacts.RemoveContact(0);
-
-                List<ContactData> newContacts = appManager.Contacts.GetContactList();
-
-                oldContacts.RemoveAt(0);
-                Assert.AreEqual(oldContacts, newContacts);
-
-                foreach (ContactData contact in newContacts)
-                {
-                    Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
-                }
+                appManager.Contacts.ContactFound();
             }
             else
             {
                 ContactData newContact = new ContactData("vvv");
                 newContact.Lastname = "hhh";
                 appManager.Contacts.CreateContact(newContact);
+            }
 
-                List<ContactData> oldContacts = appManager.Contacts.GetContactList();
-                ContactData toBeRemoved = oldContacts[0];
-                appManager.Contacts.RemoveContact(0);
+            List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+            ContactData toBeRemoved = oldContacts[0];
+            appManager.Contacts.RemoveContact(0);
 
-                List<ContactData> newContacts = appManager.Contacts.GetContactList();
+            List<ContactData> newContacts = appManager.Contacts.GetContactList();
 
-                oldContacts.RemoveAt(0);
-                Assert.AreEqual(oldContacts, newContacts);
+            oldContacts.RemoveAt(0);
+            Assert.AreEqual(oldContacts, newContacts);
 
-                foreach (ContactData contact in newContacts)
-                {
-                    Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
-                }
+            foreach (ContactData contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
             }
         }
     }

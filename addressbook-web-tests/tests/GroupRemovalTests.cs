@@ -14,6 +14,19 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
+            if(appManager.Groups.GroupFound())
+            {
+                appManager.Groups.GroupFound();
+            }
+
+            else 
+            {
+                GroupData group = new GroupData("eee");
+                group.Header = "uuu";
+                group.Footer = "zzz";
+                appManager.Groups.CreateGroup(group);
+            }
+
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             
             appManager.Groups.RemoveGroup(0);

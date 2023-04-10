@@ -103,6 +103,7 @@ namespace WebAddressBookTests
 
         public bool GroupFound()
         {
+            manager.Navigator.GoToGroupsPage();
             return IsElementPresent(By.Name("selected[]"));
         }
 

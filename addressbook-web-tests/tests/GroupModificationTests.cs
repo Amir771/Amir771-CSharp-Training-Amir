@@ -15,27 +15,7 @@ namespace WebAddressBookTests
         {
             if(appManager.Groups.GroupFound())
             {
-                GroupData newData = new GroupData("sss");
-                newData.Header = "xxx";
-                newData.Footer = "nnn";
-                
-                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-                GroupData oldData = oldGroups[0];
-                appManager.Groups.ModifyGroup(0, newData);
-
-                List<GroupData> newGroups = appManager.Groups.GetGroupList();
-                oldGroups[0].Name = newData.Name;
-                oldGroups.Sort();
-                newGroups.Sort();
-                Assert.AreEqual(oldGroups, newGroups);
-
-                foreach (GroupData groups in newGroups)
-                {
-                    if (groups.Id == oldData.Id)
-                    {
-                        Assert.AreEqual(newData.Name, groups.Name);
-                    }
-                }
+                appManager.Groups.GroupFound();
             }
             else
             {
@@ -43,30 +23,29 @@ namespace WebAddressBookTests
                 group.Header = "uuu";
                 group.Footer = "zzz";
                 appManager.Groups.CreateGroup(group);
-                
-                GroupData newData = new GroupData("sss");
-                newData.Header = "xxx";
-                newData.Footer = "nnn";
+            }
+            GroupData newData = new GroupData("sss");
+            newData.Header = "xxx";
+            newData.Footer = "nnn";
 
-                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-                GroupData oldData = oldGroups[0];
-                appManager.Groups.ModifyGroup(0, newData);
+            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
+            appManager.Groups.ModifyGroup(0, newData);
 
-                List<GroupData> newGroups = appManager.Groups.GetGroupList();
-                oldGroups[0].Name = newData.Name;
-                oldGroups.Sort();
-                newGroups.Sort();
-                Assert.AreEqual(oldGroups, newGroups);
+            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
 
-                foreach (GroupData groups in newGroups)
+            foreach (GroupData groups in newGroups)
+            {
+                if (groups.Id == oldData.Id)
                 {
-                    if(groups.Id == oldData.Id)
-                    {
-                        Assert.AreEqual(newData.Name, groups.Name);
-                    }
+                    Assert.AreEqual(newData.Name, groups.Name);
                 }
             }
-            
+
         }
 
         [Test]
@@ -74,27 +53,7 @@ namespace WebAddressBookTests
         {
             if (appManager.Groups.GroupFound())
             {
-                GroupData newData = new GroupData("aaa");
-                newData.Header = null;
-                newData.Footer = null;
-                
-                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-                GroupData oldData = oldGroups[0];
-                appManager.Groups.ModifyGroup(0, newData);
-
-                List<GroupData> newGroups = appManager.Groups.GetGroupList();
-                oldGroups[0].Name = newData.Name;
-                oldGroups.Sort();
-                newGroups.Sort();
-                Assert.AreEqual(oldGroups, newGroups);
-
-                foreach (GroupData groups in newGroups)
-                {
-                    if (groups.Id == oldData.Id)
-                    {
-                        Assert.AreEqual(newData.Name, groups.Name);
-                    }
-                }
+                appManager.Groups.GroupFound();
             }
             else
             {
@@ -102,31 +61,29 @@ namespace WebAddressBookTests
                 group.Header = "uuu";
                 group.Footer = "zzz";
                 appManager.Groups.CreateGroup(group);
-
-                GroupData newData = new GroupData("aaa");
-                newData.Header = null;
-                newData.Footer = null;
-                
-                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-                GroupData oldData = oldGroups[0];
-                appManager.Groups.ModifyGroup(0, newData);
-
-                List<GroupData> newGroups = appManager.Groups.GetGroupList();
-                oldGroups[0].Name = newData.Name;
-                oldGroups.Sort();
-                newGroups.Sort();
-                Assert.AreEqual(oldGroups, newGroups);
-
-                foreach (GroupData groups in newGroups)
-                {
-                    if (groups.Id == oldData.Id)
-                    {
-                        Assert.AreEqual(newData.Name, groups.Name);
-                    }
-                }
             }
 
-            
+            GroupData newData = new GroupData("aaa");
+            newData.Header = null;
+            newData.Footer = null;
+
+            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            GroupData oldData = oldGroups[0];
+            appManager.Groups.ModifyGroup(0, newData);
+
+            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData groups in newGroups)
+            {
+                if (groups.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Name, groups.Name);
+                }
+            }
         }
     }
 }

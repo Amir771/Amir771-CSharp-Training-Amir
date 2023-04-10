@@ -87,7 +87,9 @@ namespace WebAddressBookTests
 
         public bool ContactFound()
         {
+            manager.Navigator.LinkHome();
             return IsElementPresent(By.Name("selected[]"));
+            
         }
 
         private List<ContactData> contactCashe = null;
