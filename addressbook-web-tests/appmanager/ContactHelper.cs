@@ -137,7 +137,7 @@ namespace WebAddressBookTests
             return new ContactData(firstName, lastName)
             {
                 Address = address,
-                AllPhones = allPhones,
+                AllPhones = allPhones
                 
             };
         }

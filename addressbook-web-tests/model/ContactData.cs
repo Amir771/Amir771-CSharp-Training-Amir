@@ -86,9 +86,9 @@ namespace WebAddressBookTests
         {
             get
             {
-                if(AllPhones != null)
+                if(allPhones != null)
                 {
-                    return AllPhones;
+                    return allPhones;
                 }
                 else
                 {
