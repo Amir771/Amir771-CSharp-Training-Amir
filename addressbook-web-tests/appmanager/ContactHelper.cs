@@ -77,6 +77,13 @@ namespace WebAddressBookTests
             driver.FindElement(By.XPath("//tr["+ index +"]/td[8]/a/img")).Click();
             return this;
         }
+        public ContactHelper InitContactDetails(int index) 
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+            return this;
+        }
 
         public ContactHelper SubmitContactModify()
         {
@@ -154,6 +161,31 @@ namespace WebAddressBookTests
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone
             };
+
+        }
+
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.LinkHome();
+            InitContactDetails(index+2);
+            driver.FindElements(By.Id("content"));
+            string fullName = driver.FindElement(By.TagName("b")).Text;
+            string address = driver.FindElement(By.TagName("br(2)")).Text;
+            string homePhone = driver.FindElement(By.TagName("br(3)")).Text;
+            string mobilePhone = driver.FindElement(By.TagName("br(4)")).Text;
+            string workPhone = driver.FindElement(By.TagName("br(5)")).Text;
+
+            return new ContactData(fullName)
+            {
+                FullName = fullName,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone
+            };
+
+
+
 
         }
     }
