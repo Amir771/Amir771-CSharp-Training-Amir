@@ -48,8 +48,7 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            string s = string.Format("name={0} {1}", Lastname, Firstname);
-            return s;
+            return "name=" + (Firstname + " " + Lastname);
         }
 
         public int CompareTo(ContactData other)

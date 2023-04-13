@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -113,10 +114,11 @@ namespace WebAddressBookTests
                     IList<IWebElement> spaces = element.FindElements(By.TagName("td"));
                     contactCashe.Add(new ContactData(spaces[2].Text, spaces[1].Text));
 
-                    //contactCashe.Add(new ContactData(element.Text)
-                    //{
-                    //    Id = element.FindElement(By.TagName("input")).GetAttribute("id")
-                    //});
+                    contactCashe.Add(new ContactData(element.Text)
+                    {
+                        Id = element.FindElement(By.ClassName("center"))
+                        .FindElement(By.TagName("input")).GetAttribute("value")
+                    }); 
                 }
             }
             return new List<ContactData>(contactCashe);
