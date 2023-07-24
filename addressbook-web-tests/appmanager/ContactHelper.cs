@@ -114,11 +114,11 @@ namespace WebAddressBookTests
                     IList<IWebElement> spaces = element.FindElements(By.TagName("td"));
                     contactCashe.Add(new ContactData(spaces[2].Text, spaces[1].Text));
 
-                    contactCashe.Add(new ContactData(element.Text)
-                    {
-                        Id = element.FindElement(By.ClassName("center"))
-                        .FindElement(By.TagName("input")).GetAttribute("value")
-                    }); 
+                    //contactCashe.Add(new ContactData(element.Text)
+                    //{
+                    //    Id = element.FindElement(By.ClassName("center"))
+                    //    .FindElement(By.TagName("input")).GetAttribute("value")
+                    //}); 
                 }
             }
             return new List<ContactData>(contactCashe);

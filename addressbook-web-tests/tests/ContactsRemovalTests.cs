@@ -34,7 +34,7 @@ namespace WebAddressBookTests
 
             
             oldContacts.RemoveAt(0);
-            Assert.AreNotEqual(oldContacts, newContacts);
+            Assert.AreEqual(oldContacts, newContacts);
 
             foreach (ContactData contact in newContacts)
             {
