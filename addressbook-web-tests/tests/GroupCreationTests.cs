@@ -11,13 +11,23 @@ namespace WebAddressBookTests
     [TestFixture]
     public class GroupCreationTest : AuthTestBase
     {
-        [Test]
-        public void GroupCreationTests()
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
-            GroupData group = new GroupData("aaa");
-            group.Header = "bbb";
-            group.Footer = "ccc";
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(40))
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+                });
+            }
+            return groups;
+        }
 
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupCreationTests(GroupData group)
+        {
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.CreateGroup(group);
             
@@ -28,23 +38,7 @@ namespace WebAddressBookTests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
-        [Test]
-        public void EmptyGroupCreationTests()
-        {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
-
-            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-            appManager.Groups.CreateGroup(group);
-
-            List<GroupData> newGroups = appManager.Groups.GetGroupList();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();   
-            Assert.AreEqual(oldGroups, newGroups);
-        }
-
+        
         [Test]
         public void BadNameGroupCreationTests()
         {
