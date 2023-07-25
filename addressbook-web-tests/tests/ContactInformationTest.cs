@@ -22,16 +22,13 @@ namespace WebAddressBookTests
         }
 
         [Test]
-        public void TestContactInformationTableAndDetails()
+        public void TestContactInformationEditFormAndDetails()
         {
-            ContactData fromTable = appManager.Contacts.GetContactInformationFromTable(0);
-            ContactData fromDetails = appManager.Contacts.GetContactInformationFromDetails(0);
+            string fromForm = appManager.Contacts.GetContactGluedInformationFromEditForm(0);
+            string fromDetails = appManager.Contacts.GetContactInformationFromDetails(0);
+            
+            Assert.AreEqual(fromDetails, fromForm);
 
-            Assert.AreEqual(fromTable.FullName, fromDetails.FullName);
-            Assert.AreEqual(fromDetails.Address, fromTable.Address);
-            Assert.AreEqual(fromDetails.AllPhones, fromTable.AllPhones);
         }
-
-
     }
 }

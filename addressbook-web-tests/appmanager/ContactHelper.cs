@@ -37,14 +37,14 @@ namespace WebAddressBookTests
         {
             manager.Navigator.LinkHome();
             SelectContact(p);
-            InitContactModify(p+2);
+            InitContactModify(p + 2);
             FillNewContact(newData);
             SubmitContactModify();
             manager.Navigator.LinkHome();
             return this;
 
         }
-        
+
         public ContactHelper SubmitNewContact()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -69,16 +69,16 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectContact(int value)
         {
-            driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + (value+1) + "]")).Click();;
+            driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + (value + 1) + "]")).Click(); ;
             return this;
         }
 
         public ContactHelper InitContactModify(int index)
         {
-            driver.FindElement(By.XPath("//tr["+ index +"]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//tr[" + index + "]/td[8]/a/img")).Click();
             return this;
         }
-        public ContactHelper InitContactDetails(int index) 
+        public ContactHelper InitContactDetails(int index)
         {
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[6]
@@ -97,7 +97,7 @@ namespace WebAddressBookTests
         {
             manager.Navigator.LinkHome();
             return IsElementPresent(By.Name("selected[]"));
-            
+
         }
 
         private List<ContactData> contactCashe = null;
@@ -132,7 +132,7 @@ namespace WebAddressBookTests
             IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"));
             string lastName = cells[1].Text;
-            string firstName = cells[2].Text;   
+            string firstName = cells[2].Text;
             string address = cells[3].Text;
             string allPhones = cells[5].Text;
 
@@ -140,18 +140,18 @@ namespace WebAddressBookTests
             {
                 Address = address,
                 AllPhones = allPhones
-                
+
             };
         }
 
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.LinkHome();
-            InitContactModify(index+2);
+            InitContactModify(index + 2);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
-            
+
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
@@ -166,28 +166,85 @@ namespace WebAddressBookTests
 
         }
 
-        public ContactData GetContactInformationFromDetails(int index)
+
+        public string GetContactInformationFromDetails(int index)
         {
             manager.Navigator.LinkHome();
-            InitContactDetails(index+2);
-            driver.FindElements(By.Id("content"));
-            string fullName = driver.FindElement(By.TagName("b")).Text;
-            string address = driver.FindElement(By.TagName("br(2)")).Text;
-            string homePhone = driver.FindElement(By.TagName("br(3)")).Text;
-            string mobilePhone = driver.FindElement(By.TagName("br(4)")).Text;
-            string workPhone = driver.FindElement(By.TagName("br(5)")).Text;
+            driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"))[6]
+            .FindElement(By.TagName("a")).Click();
 
-            return new ContactData(fullName)
+            string allData = (driver.FindElement(By.Id("content")).Text);
+            return allData;
+        }
+
+
+
+
+        public string GetContactGluedInformationFromEditForm(int index)
+        {
+            manager.Navigator.LinkHome();
+            InitContactModify(index + 2);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            string fullName;
+            if (firstName != "" && lastName == "")
             {
-                FullName = fullName,
-                Address = address,
-                HomePhone = homePhone,
-                MobilePhone = mobilePhone,
-                WorkPhone = workPhone
-            };
+                fullName = firstName + "\r\n";
+            }
+            else if (firstName == "" && lastName != "")
+            {
+                fullName = lastName + "\r\n";
+            }
+            else if (firstName == "" && lastName == "")
+            {
+                fullName = "";
+            }
+            else
+            {
+                fullName = firstName + " " + lastName + "\r\n";
+            }
 
+            if (address != null)
+            {
+                address = address + "\r\n\r\n";
+            }
+            else
+            {
+                address = "";
+            }
 
-
+            if (homePhone != "")
+            {
+                homePhone = "H: " + homePhone + "\r\n";
+            }
+            else
+            {
+                homePhone = "";
+            }
+            if (mobilePhone != "")
+            {
+                mobilePhone = "M: " + mobilePhone + "\r\n";
+            }
+            else
+            {
+                mobilePhone = "";
+            }
+            if (workPhone != "")
+            {
+                workPhone = "W: " + workPhone;
+            }
+            else
+            {
+                workPhone = "";
+            }
+            string allEditData = fullName + address + homePhone + mobilePhone + workPhone;
+            return allEditData;
 
         }
     }
