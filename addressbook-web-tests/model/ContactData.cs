@@ -12,6 +12,12 @@ namespace WebAddressBookTests
     {
         private string allPhones;
 
+        public ContactData()
+        {
+
+        }
+
+
         public ContactData(string firstname)
         {
             Firstname = firstname;
@@ -48,7 +54,7 @@ namespace WebAddressBookTests
 
         public override string ToString()
         {
-            return "name=" + (Firstname + " " + Lastname);
+            return "name=" + Firstname + "\nlastname=" + Lastname;
         }
 
         public int CompareTo(ContactData other)
