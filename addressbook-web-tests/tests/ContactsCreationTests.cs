@@ -15,7 +15,7 @@ using System.Xml;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactsCreationTests : AuthTestBase
+    public class ContactsCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -61,10 +61,10 @@ namespace WebAddressBookTests
         public void ContactCreationTests(ContactData contact)
         {
             
-            List<ContactData> oldContacts = appManager.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
             appManager.Contacts.CreateContact(contact);
 
-            List<ContactData> newContacts = appManager.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

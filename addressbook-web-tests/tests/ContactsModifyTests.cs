@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class ContactsModifyTests : AuthTestBase
+    public class ContactsModifyTests : ContactTestBase
     {
         [Test]
         public void ContactsModifyTest()
@@ -29,25 +29,16 @@ namespace WebAddressBookTests
             ContactData newData = new ContactData("zzz");
             newData.Lastname = "eee";
 
-            List<ContactData> oldContact = appManager.Contacts.GetContactList();
+            List<ContactData> oldContact = ContactData.GetAll();
             ContactData oldData = oldContact[0];
-            appManager.Contacts.ModifyContact(0, newData);
+            appManager.Contacts.Modify(oldData, newData);
 
-            List<ContactData> changeContact = appManager.Contacts.GetContactList();
+            List<ContactData> changeContact = ContactData.GetAll();
             oldContact[0].Firstname = newData.Firstname;
             oldContact[0].Lastname = newData.Lastname;
             oldContact.Sort();
             changeContact.Sort();
             Assert.AreEqual(oldContact, changeContact);
-
-            //foreach (ContactData contacts in changeContact)
-            //{
-            //    if (contacts.Id == oldData.Id)
-            //    {
-            //        Assert.AreEqual(newData.Firstname, contacts.Firstname);
-            //        Assert.AreEqual(newData.Lastname, contacts.Lastname);
-            //    }
-            //}
 
         }
 
@@ -68,24 +59,16 @@ namespace WebAddressBookTests
             ContactData newData = new ContactData("nnn");
             newData.Lastname = null;
 
-            List<ContactData> oldContact = appManager.Contacts.GetContactList();
+            List<ContactData> oldContact = ContactData.GetAll();
             ContactData oldData = oldContact[0];
-            appManager.Contacts.ModifyContact(0, newData);
+            appManager.Contacts.Modify(oldData, newData);
 
-            List<ContactData> changeContact = appManager.Contacts.GetContactList();
+            List<ContactData> changeContact = ContactData.GetAll();
             oldContact[0].Firstname = newData.Firstname;
             oldContact.Sort();
             changeContact.Sort();
             Assert.AreEqual(oldContact, changeContact);
 
-            //foreach (ContactData contacts in changeContact)
-            //{
-            //    if (contacts.Id == oldData.Id)
-            //    {
-            //        Assert.AreEqual(newData.Firstname, contacts.Firstname);
-            //        Assert.AreEqual(newData.Lastname, contacts.Lastname);
-            //    }
-            //}
         }
     }
 }
