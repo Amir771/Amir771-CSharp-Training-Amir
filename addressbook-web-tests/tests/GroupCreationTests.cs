@@ -9,11 +9,12 @@ using System.Runtime.Remoting.Messaging;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTest : AuthTestBase
+    public class GroupCreationTest : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -60,10 +61,10 @@ namespace WebAddressBookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTests(GroupData group)
         {
-            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             appManager.Groups.CreateGroup(group);
             
-            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -86,6 +87,31 @@ namespace WebAddressBookTests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = appManager.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
+
+
+        [Test]
+        public void TestDBConnectivityDeprecated()
+        {
+            foreach (ContactData contact in ContactData.GetAll())
+            {
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
+
         }
     }
 }

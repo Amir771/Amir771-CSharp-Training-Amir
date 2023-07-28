@@ -13,6 +13,8 @@ namespace WebAddressBookTests
 {
     public class TestBase
     {
+        public static bool PERFORM_LONG_UI_CHECKS = false;
+
         protected IWebDriver driver;
         protected string baseURL;
 

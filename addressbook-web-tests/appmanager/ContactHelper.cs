@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,6 +44,37 @@ namespace WebAddressBookTests
             manager.Navigator.LinkHome();
             return this;
 
+        }
+
+        public void AddContactsToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.LinkHome();
+            ClearGroupFilter();
+            SelectContactId(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void SelectContactId(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
 
         public ContactHelper SubmitNewContact()
@@ -192,6 +224,10 @@ namespace WebAddressBookTests
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
 
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
             string fullName;
             if (firstName != "" && lastName == "")
             {
@@ -210,7 +246,7 @@ namespace WebAddressBookTests
                 fullName = firstName + " " + lastName + "\r\n";
             }
 
-            if (address != null)
+            if (address != "")
             {
                 address = address + "\r\n\r\n";
             }
@@ -237,15 +273,50 @@ namespace WebAddressBookTests
             }
             if (workPhone != "")
             {
-                workPhone = "W: " + workPhone;
+                workPhone = "W: " + workPhone + "\r\n\r\n";
             }
             else
             {
                 workPhone = "";
             }
-            string allEditData = fullName + address + homePhone + mobilePhone + workPhone;
+
+            string allEmails;
+
+            if (email != "" && email2 != "" && email3 != "")
+            {
+                allEmails = email + "\r\n" + email2 + "\r\n" + email3;
+            }
+            else if (email == "" && email2 != "" && email3 != "")
+            {
+                allEmails = email2 + "\r\n" + email3; 
+            }
+            else if (email == "" && email2 == "" && email3 != "")
+            {
+                allEmails = email3;
+            }
+            else if (email != "" && email2 != "" && email3 == "")
+            {
+                allEmails = email + "\r\n" + email2;
+            }
+            else if (email != "" && email2 == "" && email3 == "")
+            {
+                allEmails = email;
+            }
+            else if (email == "" && email2 != "" && email3 == "")
+            {
+                allEmails = email2;
+            }
+            else
+            {
+                allEmails = "";
+            }
+
+             
+            string allEditData = fullName + address + homePhone + mobilePhone + workPhone + allEmails;
             return allEditData;
 
         }
+
+        
     }
 }
