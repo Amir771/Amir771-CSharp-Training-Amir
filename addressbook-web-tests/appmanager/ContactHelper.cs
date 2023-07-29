@@ -80,9 +80,29 @@ namespace WebAddressBookTests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.LinkHome();
+            SelectGroup(group.Name);
+            SelectContactId(contact.Id);
+            CommitRemoveContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
         public void CommitAddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void CommitRemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        public void SelectGroup(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
         }
 
         public void SelectGroupToAdd(string name)
@@ -122,6 +142,7 @@ namespace WebAddressBookTests
             return this;
         }
 
+        
         public ContactHelper SelectContact(int value)
         {
             driver.FindElement(By.XPath("(//table[@id='maintable']/tbody/tr/td/input[@name='selected[]'])[" + (value + 1) + "]")).Click(); ;
