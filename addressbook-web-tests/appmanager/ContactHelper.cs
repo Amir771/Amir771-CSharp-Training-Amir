@@ -305,31 +305,43 @@ namespace WebAddressBookTests
                 address = "";
             }
 
-            if (homePhone != "")
+            
+            string allPhones;
+
+            if (homePhone != "" && mobilePhone != "" && workPhone != "")
             {
-                homePhone = "H: " + homePhone + "\r\n";
+                allPhones = "H: " + homePhone + "\r\n" + "M: " + mobilePhone + "\r\n" + "W: " + workPhone;
+            }
+            else if (homePhone == "" && mobilePhone != "" && workPhone != "")
+            {
+                allPhones = "M: " + mobilePhone + "\r\n" + "W: " + workPhone;
+            }
+            else if (homePhone == "" && mobilePhone == "" && workPhone != "")
+            {
+                allPhones = "W: " + workPhone;
+            }
+            else if (homePhone != "" && mobilePhone != "" && workPhone == "")
+            {
+                allPhones = "H: " + homePhone + "\r\n" + "M: " + mobilePhone;
+            }
+            else if (homePhone != "" && mobilePhone == "" && workPhone == "")
+            {
+                allPhones = "H: " + homePhone;
+            }
+            else if (homePhone == "" && mobilePhone != "" && workPhone == "")
+            {
+                allPhones = "M: " + mobilePhone;
+            }
+            else if (homePhone != "" && mobilePhone == "" && workPhone != "")
+            {
+                allPhones = "H: " + homePhone + "\r\n" + "W: " + workPhone;
             }
             else
             {
-                homePhone = "";
-            }
-            if (mobilePhone != "")
-            {
-                mobilePhone = "M: " + mobilePhone + "\r\n";
-            }
-            else
-            {
-                mobilePhone = "";
-            }
-            if (workPhone != "")
-            {
-                workPhone = "W: " + workPhone + "\r\n\r\n";
-            }
-            else
-            {
-                workPhone = "";
+                allPhones = "";
             }
 
+            
             string allEmails;
 
             if (email != "" && email2 != "" && email3 != "")
@@ -356,17 +368,40 @@ namespace WebAddressBookTests
             {
                 allEmails = email2;
             }
+            else if (email != "" && email2 == "" && email3 != "")
+            {
+                allEmails = email + "\r\n" + email3;
+            }
             else
             {
                 allEmails = "";
             }
 
-             
-            string allEditData = fullName + address + homePhone + mobilePhone + workPhone + allEmails;
+            if (address == "" && (allPhones != "" || allEmails != ""))
+            {
+                address = "\r\n";
+            }
+            if (allPhones != "" && allEmails != "")
+            {
+                allPhones = allPhones + "\r\n\r\n";
+            }
+            if (allPhones != "" && allEmails == "")
+            {
+                allPhones = allPhones.Trim();
+            }
+            if (address == "" && allPhones == "" && allEmails == "")
+            {
+                fullName = fullName.Trim();
+            }
+            if (address != "" && allPhones == "" && allEmails == "")
+            {
+                address = address.Trim();
+            }
+
+
+            string allEditData = fullName + address + allPhones + allEmails;
             return allEditData;
 
         }
-
-        
     }
 }
