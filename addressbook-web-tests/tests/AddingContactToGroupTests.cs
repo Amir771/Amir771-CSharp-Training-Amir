@@ -16,18 +16,42 @@ namespace WebAddressBookTests
             appManager.Groups.CheckForGroupForAdd();
             appManager.Contacts.CheckForContactForAdd();
 
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
+            List<GroupData> groups = GroupData.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
+            
+            var found = false;
+            ContactData foundContact = null;
+            GroupData foundGroup = null;
 
-            appManager.Contacts.AddContactsToGroup(contact, group);
+            foreach (var group in groups)
+            {
+                foreach (var contact in contacts)
+                {
+                    if (!group.GetContacts().Contains(contact))
+                    {
+                        foundContact = contact;
+                        foundGroup = group;
+                        found = true;
+                        break;
+                    }
+                }
+            }
 
-            List<ContactData> newList = group.GetContacts();
-            oldList.Add(contact);
+            if (!found)
+            {
+                appManager.Contacts.CreateContact(new ContactData(GenerateRandomString(8), GenerateRandomString(8)));
+                var oldContacts = ContactData.GetAll();
+                foundGroup = groups[0];
+                foundContact = oldContacts.Except(contacts).First();
+            }
+
+            var oldList = foundGroup.GetContacts();
+            appManager.Contacts.AddContactsToGroup(foundContact, foundGroup);
+            List<ContactData> newList = foundGroup.GetContacts();
+            oldList.Add(foundContact);
             newList.Sort();
             oldList.Sort();
-
-            Assert.AreEqual(oldList,newList);
+            Assert.AreEqual(oldList, newList);
 
 
         }
