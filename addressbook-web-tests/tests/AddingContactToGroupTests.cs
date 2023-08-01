@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -12,6 +13,9 @@ namespace WebAddressBookTests
         [Test]
         public void TestAddingContactToGroup()
         {
+            appManager.Groups.CheckForGroupForAdd();
+            appManager.Contacts.CheckForContactForAdd();
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();

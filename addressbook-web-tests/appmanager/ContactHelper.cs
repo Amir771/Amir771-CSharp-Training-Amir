@@ -403,5 +403,17 @@ namespace WebAddressBookTests
             return allEditData;
 
         }
+
+        public ContactHelper CheckForContactForAdd()
+        {
+            manager.Navigator.LinkHome();
+
+            if (!IsElementPresent(By.XPath("//td/input")))
+            {
+                ContactData contact = new ContactData("Name", "LastName");
+                CreateContact(contact);
+            }
+            return this;
+        }
     }
 }

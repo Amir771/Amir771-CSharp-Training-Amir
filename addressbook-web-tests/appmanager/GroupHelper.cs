@@ -154,5 +154,19 @@ namespace WebAddressBookTests
             }
             return new List<GroupData>(groupCashe);        
         }
+
+        public GroupHelper CheckForGroupForAdd()
+        {
+            manager.Navigator.GoToGroupsPage();
+
+            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[1]/input")))
+            {
+                GroupData group = new GroupData("Group");
+                group.Header = "Heater";
+                group.Footer = "Footer";
+                CreateGroup(group);
+            }
+            return this;
+        }
     }
 }
