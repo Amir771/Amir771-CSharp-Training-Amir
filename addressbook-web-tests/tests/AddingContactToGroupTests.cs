@@ -40,12 +40,12 @@ namespace WebAddressBookTests
             if (!found)
             {
                 appManager.Contacts.CreateContact(new ContactData(GenerateRandomString(8), GenerateRandomString(8)));
-                var oldContacts = ContactData.GetAll();
+                List<ContactData> oldContacts = ContactData.GetAll();
                 foundGroup = groups[0];
                 foundContact = oldContacts.Except(contacts).First();
             }
 
-            var oldList = foundGroup.GetContacts();
+            List<ContactData> oldList = foundGroup.GetContacts();
             appManager.Contacts.AddContactsToGroup(foundContact, foundGroup);
             List<ContactData> newList = foundGroup.GetContacts();
             oldList.Add(foundContact);
