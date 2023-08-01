@@ -10,6 +10,9 @@ namespace mantis_tests
     {
         private string name;
         private string description = "";
+        public ProjectData()
+        {
+        }
         public ProjectData(string name, string description)
         {
             this.name = name;
@@ -50,6 +53,7 @@ namespace mantis_tests
                 return Description.CompareTo(other.Description);
             }
         }
+        public string Id { get; set; }
         public string Name
         {
             get
@@ -72,6 +76,5 @@ namespace mantis_tests
                 description = value;
             }
         }
-
     }
 }
